@@ -2,80 +2,89 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>スライドデモ（最終安定版）</title>
-<style>
-  body {
-    margin: 0;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: black;
-  }
+  <title>スライドデモ（固定ボタン・中央動画対応）</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: black;
+    }
 
-  .slide {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    display: none;
-  }
+    .slide {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: none;
+    }
 
-  .slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 
-  /* ✅ ボタンを固定配置（常に画面下に見える） */
-  .controls {
-    position: fixed;
-    bottom: 20px;          /* ← 画面下から20px上（見やすく押しやすい） */
-    left: 0;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    z-index: 100;
-  }
+    /* ✅ ボタンを固定配置（常に画面下に表示） */
+    .controls {
+      position: fixed;
+      bottom: 20px;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      z-index: 100;
+      background: rgba(0, 0, 0, 0.3); /* 半透明の黒背景 */
+      padding: 10px 0;
+      border-radius: 12px;
+    }
 
-  button {
-    background-color: rgba(255,255,255,0.7);
-    border: none;
-    padding: 10px 20px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: 0.3s;
-  }
+    button {
+      background-color: rgba(255,255,255,0.8);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: 0.3s;
+    }
 
-  button:hover {
-    background-color: rgba(255,255,255,0.9);
-  }
+    button:hover {
+      background-color: rgba(255,255,255,1);
+    }
 
-  
+    /* ✅ 動画を画面中央に固定（スライド中央表示） */
+    video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80%;
+      max-width: 800px;
+      border-radius: 12px;
+      z-index: 50;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
 
-  @media (max-width: 600px) {
- video {
-  width: 80%;
-  max-width: 800px;
-  border-radius: 12px;
-  margin-top: 20px;
-  z-index: 50;           /* ✅ ボタンより手前に来るように設定 */
-  position: relative;    /* ✅ レイヤー制御の基準を明示 */
-  display: block;        /* ✅ 中央揃え安定 */
-  margin-left: auto;     /* ✅ 横中央に配置 */
-  margin-right: auto;
-}
-
-  }
-</style>
-
+    @media (max-width: 600px) {
+      video {
+        width: 90%;
+      }
+      button {
+        font-size: 14px;
+        padding: 8px 16px;
+      }
+    }
+  </style>
 </head>
 <body>
   <div id="slides"></div>
 
   <script>
+    // ✅ スライドデータ設定
     const slidesData = [
       { image: "s1.JPG" },
       { image: "s2.JPG" },
@@ -98,13 +107,16 @@
       const slide = document.createElement("div");
       slide.className = "slide";
 
+      // 画像を背景として配置
       const img = document.createElement("img");
       img.src = slideData.image;
       slide.appendChild(img);
 
+      // コントロールボタン群
       const controls = document.createElement("div");
       controls.className = "controls";
 
+      // 前へ
       if (index > 0) {
         const backBtn = document.createElement("button");
         backBtn.textContent = "前へ";
@@ -112,6 +124,7 @@
         controls.appendChild(backBtn);
       }
 
+      // 動画再生
       if (slideData.video) {
         const videoBtn = document.createElement("button");
         videoBtn.textContent = "動画再生";
@@ -126,6 +139,7 @@
         controls.appendChild(videoBtn);
       }
 
+      // 次へ
       if (!slideData.end && index < slidesData.length - 1) {
         const nextBtn = document.createElement("button");
         nextBtn.textContent = "次へ";
@@ -133,6 +147,7 @@
         controls.appendChild(nextBtn);
       }
 
+      // 最後のスライド
       if (slideData.end) {
         const restartBtn = document.createElement("button");
         restartBtn.textContent = "最初に戻る";
@@ -140,18 +155,19 @@
         controls.appendChild(restartBtn);
       }
 
+      // スライドを表示
       slide.appendChild(controls);
       slidesContainer.appendChild(slide);
       slide.style.display = "block";
     }
 
-    // ✅ ページ全体が完全に読み込まれた後に起動
-    window.onload = () => {
-      showSlide(0);
-    };
+    // ✅ ページ読み込み完了後に初期スライドを表示
+    window.onload = () => showSlide(0);
   </script>
 </body>
 </html>
+
+
 
 
 
