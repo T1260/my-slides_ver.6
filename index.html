@@ -72,14 +72,14 @@
   <div id="slides"></div>
 
   <script>
-    // スライド情報（全ファイルが同じ場所にある想定）
+    // スライドデータ（大文字拡張子に合わせ済み）
     const slidesData = [
       { image: "s1.JPG" },
       { image: "s2.JPG" },
       { image: "s3.JPG" },
       { image: "s4.JPG" },
       { image: "s5.jpg", video: "m1.mp4" },
-      { image: "s6.jpg", video: "m1.mp4" },
+      { image: "s6.jpg" },
       { image: "s7.jpg", end: true }
     ];
 
@@ -90,6 +90,8 @@
       slidesContainer.innerHTML = "";
 
       const slideData = slidesData[index];
+      if (!slideData) return; // 万一範囲外なら無視
+
       const slide = document.createElement("div");
       slide.className = "slide";
 
@@ -102,7 +104,7 @@
       const controls = document.createElement("div");
       controls.className = "controls";
 
-      // 前へ
+      // 前へボタン
       if (index > 0) {
         const backBtn = document.createElement("button");
         backBtn.textContent = "前へ";
@@ -110,7 +112,7 @@
         controls.appendChild(backBtn);
       }
 
-      // 動画再生ボタン
+      // 動画ボタン
       if (slideData.video) {
         const videoBtn = document.createElement("button");
         videoBtn.textContent = "動画再生";
@@ -125,7 +127,7 @@
         controls.appendChild(videoBtn);
       }
 
-      // 次へ
+      // 次へボタン（最終スライド以外）
       if (!slideData.end && index < slidesData.length - 1) {
         const nextBtn = document.createElement("button");
         nextBtn.textContent = "次へ";
@@ -133,7 +135,7 @@
         controls.appendChild(nextBtn);
       }
 
-      // 終了スライド
+      // 終了スライドなら「最初に戻る」
       if (slideData.end) {
         const restartBtn = document.createElement("button");
         restartBtn.textContent = "最初に戻る";
@@ -151,5 +153,7 @@
   </script>
 </body>
 </html>
+
+
 
 
