@@ -3,61 +3,74 @@
 <head>
   <meta charset="UTF-8">
   <title>スライドデモ（最終安定版）</title>
-  <style>
-    body {
-      margin: 0;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background-color: black;
-    }
-    .slide {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      display: none;
-    }
-    .slide img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .controls {
-      position: absolute;
-      bottom: 5%;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      z-index: 10;
+<style>
+  body {
+    margin: 0;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: black;
+  }
+
+  .slide {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: none;
+  }
+
+  .slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* ✅ ボタンを固定配置（常に画面下に見える） */
+  .controls {
+    position: fixed;
+    bottom: 20px;          /* ← 画面下から20px上（見やすく押しやすい） */
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    z-index: 100;
+  }
+
+  button {
+    background-color: rgba(255,255,255,0.7);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+  }
+
+  button:hover {
+    background-color: rgba(255,255,255,0.9);
+  }
+
+  video {
+    width: 80%;
+    max-width: 800px;
+    border-radius: 12px;
+    margin-top: 20px;
+  }
+
+  @media (max-width: 600px) {
+    video {
+      width: 90%;
     }
     button {
-      background-color: rgba(255,255,255,0.7);
-      border: none;
-      padding: 10px 20px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 16px;
-      transition: 0.3s;
+      font-size: 14px;
+      padding: 8px 16px;
     }
-    button:hover { background-color: rgba(255,255,255,0.9); }
-    video {
-      width: 80%;
-      max-width: 800px;
-      border-radius: 12px;
-      margin-top: 20px;
-      z-index: 5;
-    }
-    @media (max-width: 600px) {
-      video { width: 90%; }
-      button {
-        font-size: 14px;
-        padding: 8px 16px;
-      }
-    }
-  </style>
+  }
+</style>
+
 </head>
 <body>
   <div id="slides"></div>
@@ -139,6 +152,7 @@
   </script>
 </body>
 </html>
+
 
 
 
