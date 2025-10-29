@@ -61,13 +61,18 @@
   }
 
   @media (max-width: 600px) {
-    video {
-      width: 90%;
-    }
-    button {
-      font-size: 14px;
-      padding: 8px 16px;
-    }
+ video {
+  width: 80%;
+  max-width: 800px;
+  border-radius: 12px;
+  margin-top: 20px;
+  z-index: 50;           /* ✅ ボタンより手前に来るように設定 */
+  position: relative;    /* ✅ レイヤー制御の基準を明示 */
+  display: block;        /* ✅ 中央揃え安定 */
+  margin-left: auto;     /* ✅ 横中央に配置 */
+  margin-right: auto;
+}
+
   }
 </style>
 
@@ -152,6 +157,7 @@
   </script>
 </body>
 </html>
+
 
 
 
